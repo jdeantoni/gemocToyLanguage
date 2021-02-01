@@ -1,0 +1,147 @@
+digraph {
+	rankdir=LR;
+	start=0;
+	node [style="filled"]
+
+	0 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	0
+j
+	currentValue:	0
+k
+	currentValue:	0
+"];
+	1 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	0
+j
+	currentValue:	0
+k
+	currentValue:	4
+"];
+	2 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	0
+j
+	currentValue:	6
+k
+	currentValue:	0
+"];
+	3 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	0
+j
+	currentValue:	6
+k
+	currentValue:	4
+"];
+	4 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	3
+j
+	currentValue:	0
+k
+	currentValue:	0
+"];
+	5 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	3
+j
+	currentValue:	0
+k
+	currentValue:	4
+"];
+	6 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	3
+j
+	currentValue:	6
+k
+	currentValue:	0
+"];
+	7 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	3
+j
+	currentValue:	6
+k
+	currentValue:	4
+"];
+	8 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	3
+j
+	currentValue:	9
+k
+	currentValue:	4
+"];
+	9 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	3
+j
+	currentValue:	9
+k
+	currentValue:	4
+"];
+	10 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	18
+j
+	currentValue:	9
+k
+	currentValue:	4
+"];
+	11 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	3
+j
+	currentValue:	9
+k
+	currentValue:	1
+"];
+	12 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	18
+j
+	currentValue:	9
+k
+	currentValue:	1
+"];
+	13 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	18
+j
+	currentValue:	9
+k
+	currentValue:	-14
+"];
+	14 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	36
+j
+	currentValue:	9
+k
+	currentValue:	1
+"];
+	15 [fillcolor="#ffffff", size="10", shape="circle", fontcolor="black", label="i
+	currentValue:	36
+j
+	currentValue:	9
+k
+	currentValue:	-14
+"];
+
+	0 -> 1 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_k_2_initIt "];
+	0 -> 2 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_j_3_initIt "];
+	0 -> 3 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_j_3_initIt MSE_k_2_initIt "];
+	0 -> 4 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_i_1_initIt "];
+	0 -> 5 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_i_1_initIt MSE_k_2_initIt "];
+	0 -> 6 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_i_1_initIt MSE_j_3_initIt "];
+	0 -> 7 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_i_1_initIt MSE_j_3_initIt MSE_k_2_initIt "];
+	1 -> 3 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_j_3_initIt "];
+	1 -> 5 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_i_1_initIt "];
+	1 -> 7 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_i_1_initIt MSE_j_3_initIt "];
+	2 -> 3 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_k_2_initIt "];
+	2 -> 6 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_i_1_initIt "];
+	2 -> 7 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_i_1_initIt MSE_k_2_initIt "];
+	3 -> 7 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_i_1_initIt "];
+	4 -> 5 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_k_2_initIt "];
+	4 -> 6 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_j_3_initIt "];
+	4 -> 7 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_j_3_initIt MSE_k_2_initIt "];
+	5 -> 7 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_j_3_initIt "];
+	6 -> 7 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_k_2_initIt "];
+	7 -> 8 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_a1_4_executeIt "];
+	8 -> 9 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_pa1_6_executeIt "];
+	9 -> 10 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_a2_5_executeIt "];
+	9 -> 11 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_a3_8_executeIt "];
+	9 -> 12 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_a3_8_executeIt MSE_a2_5_executeIt "];
+	10 -> 13 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_a3_8_executeIt "];
+	11 -> 12 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_a2_5_executeIt "];
+	12 -> 14 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_a4_7_executeIt "];
+	13 -> 15 [penwidth="1", color="#aaaaaa", style="solid", label="MSE_a4_7_executeIt "];
+}

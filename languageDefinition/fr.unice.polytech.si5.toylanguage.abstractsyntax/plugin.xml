@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated toyLanguage -->
+      <package
+            uri="http://www.polytech.unice.fr/toyLanguage"
+            class="fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.ToyLanguagePackage"
+            genModel="model/toyLanguage.genmodel"/>
+   </extension>
+
+</plugin>

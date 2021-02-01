@@ -1,0 +1,15 @@
+	// BeginInjectInto fr.unice.polytech.si5.toylanguage.rewritingrules.StatementAspect#double execute() from fr.unice.polytech.si5.toylanguage.rewritingrules.SoustractionAspect
+		if (_self instanceof fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.Soustraction){
+			result = fr.unice.polytech.si5.toylanguage.rewritingrules.SoustractionAspect.execute((fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.Soustraction)_self);
+		} else
+		// EndInjectInto fr.unice.polytech.si5.toylanguage.rewritingrules.StatementAspect#double execute() from fr.unice.polytech.si5.toylanguage.rewritingrules.SoustractionAspect
+	// BeginInjectInto fr.unice.polytech.si5.toylanguage.rewritingrules.StatementAspect#double execute() from fr.unice.polytech.si5.toylanguage.rewritingrules.AdditionAspect
+		if (_self instanceof fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.Addition){
+			result = fr.unice.polytech.si5.toylanguage.rewritingrules.AdditionAspect.execute((fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.Addition)_self);
+		} else
+		// EndInjectInto fr.unice.polytech.si5.toylanguage.rewritingrules.StatementAspect#double execute() from fr.unice.polytech.si5.toylanguage.rewritingrules.AdditionAspect
+	// BeginInjectInto fr.unice.polytech.si5.toylanguage.rewritingrules.StatementAspect#double execute() from fr.unice.polytech.si5.toylanguage.rewritingrules.AssignmentAspect
+		if (_self instanceof fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.Assignment){
+			result = fr.unice.polytech.si5.toylanguage.rewritingrules.AssignmentAspect.execute((fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.Assignment)_self);
+		} else
+		// EndInjectInto fr.unice.polytech.si5.toylanguage.rewritingrules.StatementAspect#double execute() from fr.unice.polytech.si5.toylanguage.rewritingrules.AssignmentAspect

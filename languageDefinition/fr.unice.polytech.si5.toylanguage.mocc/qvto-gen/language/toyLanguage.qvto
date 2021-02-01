@@ -1,0 +1,786 @@
+import org.eclipse.gemoc.moccml_mapping.EclQVToHelper;
+modeltype Ecore uses 'http://www.eclipse.org/emf/2002/Ecore';
+	modeltype inMM1 uses 'http://www.polytech.unice.fr/toyLanguage';
+
+modeltype QVT 		uses 'http://www.eclipse.org/QVT/1.0.0/Operational';
+modeltype TimeModel uses 'http://fr.inria.aoste.timemodel';
+modeltype FeedBack 	uses 'http://timesquare.inria.fr/feedback';
+modeltype Priority  uses 'http://fr.inria.aoste.timesquare.ccslkernel.solver.priorities';
+
+transformation dotoyLanguage_To_CCSL(in inM : inMM1, out ccsl : TimeModel, out feedback : FeedBack, out priority: Priority);
+
+property thePrioritySpec		:Priority::PrioritySpecification = null;
+property theFeedBackSpec		:FeedBack::ActionModel = null;
+property seqOfMSE :	Sequence(FeedBack::ModelSpecificEvent)    = Sequence{};
+property theCCSLSpec			:TimeModel::CCSLModel::ClockConstraintSystem = null;
+property theMainBlock			:TimeModel::CCSLModel::Block				 = null;
+property Kernel_Integer 	: TimeModel::BasicType::Type		= null;
+property Kernel_Clock_Type 	: TimeModel::BasicType::Type		= null;
+property seqOfRelationDeclaration :	Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::RelationDeclaration)    = Sequence{};
+property seqOfAbstractEntity :		Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)    = Sequence{};
+property seqOfExpressionDeclaration :	Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::ExpressionDeclaration)    = Sequence{};
+property allVarDefs : Sequence(String) = Sequence{}; 
+
+query identifyUserRelations() {
+	var kernelTypes :  	Sequence(TimeModel::BasicType::Type) := Sequence{};
+	seqOfRelationDeclaration		+= getLibObjects("platform:/plugin/fr.inria.aoste.timesquare.ccslkernel.model/ccsllibrary/kernel.ccslLib")[TimeModel::CCSLModel::ClockExpressionAndRelation::RelationDeclaration];
+	seqOfAbstractEntity				+= getLibObjects("platform:/plugin/fr.inria.aoste.timesquare.ccslkernel.model/ccsllibrary/kernel.ccslLib")[TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity];
+	seqOfExpressionDeclaration		+= getLibObjects("platform:/plugin/fr.inria.aoste.timesquare.ccslkernel.model/ccsllibrary/kernel.ccslLib")[TimeModel::CCSLModel::ClockExpressionAndRelation::ExpressionDeclaration];
+	kernelTypes 					+= getLibObjects("platform:/plugin/fr.inria.aoste.timesquare.ccslkernel.model/ccsllibrary/kernel.ccslLib")[TimeModel::BasicType::Type];
+	seqOfRelationDeclaration		+= getLibObjects("platform:/plugin/fr.inria.aoste.timesquare.ccslkernel.model/ccsllibrary/CCSL.ccslLib")[TimeModel::CCSLModel::ClockExpressionAndRelation::RelationDeclaration];
+	seqOfAbstractEntity				+= getLibObjects("platform:/plugin/fr.inria.aoste.timesquare.ccslkernel.model/ccsllibrary/CCSL.ccslLib")[TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity];
+	seqOfExpressionDeclaration		+= getLibObjects("platform:/plugin/fr.inria.aoste.timesquare.ccslkernel.model/ccsllibrary/CCSL.ccslLib")[TimeModel::CCSLModel::ClockExpressionAndRelation::ExpressionDeclaration];
+	kernelTypes 					+= getLibObjects("platform:/plugin/fr.inria.aoste.timesquare.ccslkernel.model/ccsllibrary/CCSL.ccslLib")[TimeModel::BasicType::Type];
+
+	Kernel_Integer 					:= kernelTypes[name='int']->asSequence()->first();
+	Kernel_Clock_Type				:= kernelTypes[name='clock']->asSequence()->first();	
+	return;
+}
+
+
+//usefull function :)
+	mapping Real::Real2Integer(n: String) :TimeModel::BasicType::IntegerElement {
+		name:= n;
+		type:= Kernel_Integer;
+		value := self.round();
+
+		end{
+			theMainBlock.elements += result;
+		}
+	}
+
+main() {
+	identifyUserRelations();
+	inM.rootObjects()[inMM1::ToyProgram]->asSequence()->first()-> map toyLanguage2CCSL();
+	inM.rootObjects()[inMM1::ToyProgram]->asSequence()->first()-> map toyLanguage2FeedBack();
+	inM.rootObjects()[inMM1::ToyProgram]->asSequence()->first()-> map toyLanguage2Priority();
+}
+
+			
+	mapping inMM1::ToyProgram::toyLanguage2CCSL() : TimeModel::CCSLModel::ClockConstraintSystem {
+	    theCCSLSpec := result;
+	    name := getNameOrUID(self.oclAsType(EObject));
+	    theMainBlock :=object TimeModel::CCSLModel::Block{
+	    	name := "mainBlock";
+	    };
+	    subBlock += theMainBlock;
+	    result.superBlock := theMainBlock;
+		
+		var anEmptyBlock :=object TimeModel::CCSLModel::Block{
+	    	name := "emptyBlock";
+	    };
+	    subBlock += anEmptyBlock;
+		
+		imports+= object TimeModel::ImportStatement{
+			importURI := 'platform:/plugin/fr.inria.aoste.timesquare.ccslkernel.model/ccsllibrary/kernel.ccslLib';
+			alias := 'kernel';
+			
+		}; 
+		imports+= object TimeModel::ImportStatement{
+			importURI := 'platform:/plugin/fr.inria.aoste.timesquare.ccslkernel.model/ccsllibrary/CCSL.ccslLib';
+			alias := 'CCSL';
+			
+		}; 
+	
+		imports+= object TimeModel::ImportStatement{
+			importURI := getModelPath(inM.rootObjects()->asSequence()->first().oclAsType(EObject));
+			alias := getModelAlias(inM.rootObjects()->asSequence()->first().oclAsType(EObject));
+			
+		};
+		imports+= object TimeModel::ImportStatement{
+			importURI := getModelPath(inM.rootObjects()->asSequence()->first().oclAsType(EObject));
+			alias := getModelAlias(inM.rootObjects()->asSequence()->first().oclAsType(EObject));
+			
+		};
+
+		
+
+		////[ Variable ]
+		getVeryAllElementsFromResourceSetOf(self.oclAsType(EObject), Variable.oclAsType(EClass)).oclAsType(Variable)->map initIt2Clock();
+		
+
+
+		
+
+		////[ Statement ]
+		getVeryAllElementsFromResourceSetOf(self.oclAsType(EObject), Statement.oclAsType(EClass)).oclAsType(Statement)->map executeIt2Clock();
+		
+
+
+		
+
+		
+
+
+		
+		getVeryAllElementsFromResourceSetOf(self.oclAsType(EObject), ToyProgram.oclAsType(EClass)).oclAsType(ToyProgram)->map LastInitBeforeFirstExec42LastInitBeforeFirstExec();
+		
+		
+		getVeryAllElementsFromResourceSetOf(self.oclAsType(EObject), ToyProgram.oclAsType(EClass)).oclAsType(ToyProgram)->map followCollectionOrder12followCollectionOrder();
+		
+		
+
+		
+
+
+		
+		getVeryAllElementsFromResourceSetOf(self.oclAsType(EObject), ParallelAssignment.oclAsType(EClass)).oclAsType(ParallelAssignment)->map execFirstThenInternal22execFirstThenInternal();
+		
+		
+		getVeryAllElementsFromResourceSetOf(self.oclAsType(EObject), ParallelAssignment.oclAsType(EClass)).oclAsType(ParallelAssignment)->map lastInternalThenNext52lastInternalThenNext();
+		
+		
+
+		
+
+
+		
+		getVeryAllElementsFromResourceSetOf(self.oclAsType(EObject), Variable.oclAsType(EClass)).oclAsType(Variable)->map initOnlyOnce22initOnlyOnce();
+		
+	}
+
+
+
+
+
+//create the expressions...
+
+	
+	
+//Create an intermediate expression
+//create the expressions... 
+	mapping inMM1::ToyProgram::intermediate_firstExec2Expression(an1 : Statement, an2 : Statement, nb : Integer):TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{ 
+		name := getNameOrUID(self.oclAsType(EObject))+'intermediate_firstExec'+nb.toString();
+		type := seqOfExpressionDeclaration->select(rd | rd.name = "Inf")->first();
+		//from defs
+		
+		//from lets
+		
+
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+		 			bindable := theMainBlock.elements[name = getNameOrUID(an1.oclAsType(EObject))+'_executeIt']->first();
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Inf']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Inf).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(1).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(an2.oclAsType(EObject))+'_executeIt']->first();
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Inf']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Inf).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(2).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+
+	mapping inMM1::ToyProgram::intermediate_firstExec2Expression(expr :TimeModel::CCSLModel::ClockExpressionAndRelation::Expression , an : Statement, nb : Integer):TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{
+		name := getNameOrUID(self.oclAsType(EObject))+'intermediate_firstExec'+nb.toString();
+		type := seqOfExpressionDeclaration->select(rd | rd.name = "Inf")->first();
+		//from defs
+		
+		//from lets
+		
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.expressions[name = expr.name]->first();
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Inf']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Inf).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(1).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(an.oclAsType(EObject))+'_executeIt']->first();
+					
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Inf']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Inf).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(2).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+	
+	mapping inMM1::ToyProgram::firstExec2Expression():TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{
+		init{
+		//from defs
+		
+		//from lets
+		
+
+		var sources : Sequence(Statement) := self.ownedStatements->asSequence();
+		var lastExpr : TimeModel::CCSLModel::ClockExpressionAndRelation::Expression :=null;
+		var i : Integer := 3;
+		var newExpr : TimeModel::CCSLModel::ClockExpressionAndRelation::Expression := lastExpr;
+		var size : Integer = sources->size(); 
+		if(size = 1)then{
+			result := self.map intermediate_firstExec2Expression(sources->at(1),sources->at(1), 1);
+		}else{
+			lastExpr := self.map intermediate_firstExec2Expression(sources->at(1),sources->at(2), 1);
+			while (i <= size){
+				newExpr := self.map intermediate_firstExec2Expression(lastExpr,sources->at(i), i);
+				lastExpr := newExpr;
+				i := i + 1;
+			};
+			result := lastExpr;
+		}
+		endif;
+		}
+		
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+
+
+	
+	
+//Create an intermediate expression
+//create the expressions... 
+	mapping inMM1::ToyProgram::intermediate_lastInit2Expression(an1 : Variable, an2 : Variable, nb : Integer):TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{ 
+		name := getNameOrUID(self.oclAsType(EObject))+'intermediate_lastInit'+nb.toString();
+		type := seqOfExpressionDeclaration->select(rd | rd.name = "Sup")->first();
+		//from defs
+		
+		//from lets
+		
+
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+		 			bindable := theMainBlock.elements[name = getNameOrUID(an1.oclAsType(EObject))+'_initIt']->first();
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Sup']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Sup).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(1).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(an2.oclAsType(EObject))+'_initIt']->first();
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Sup']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Sup).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(2).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+
+	mapping inMM1::ToyProgram::intermediate_lastInit2Expression(expr :TimeModel::CCSLModel::ClockExpressionAndRelation::Expression , an : Variable, nb : Integer):TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{
+		name := getNameOrUID(self.oclAsType(EObject))+'intermediate_lastInit'+nb.toString();
+		type := seqOfExpressionDeclaration->select(rd | rd.name = "Sup")->first();
+		//from defs
+		
+		//from lets
+		
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.expressions[name = expr.name]->first();
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Sup']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Sup).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(1).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(an.oclAsType(EObject))+'_initIt']->first();
+					
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Sup']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Sup).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(2).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+	
+	mapping inMM1::ToyProgram::lastInit2Expression():TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{
+		init{
+		//from defs
+		
+		//from lets
+		
+
+		var sources : Sequence(Variable) := self.ownedVariables->asSequence();
+		var lastExpr : TimeModel::CCSLModel::ClockExpressionAndRelation::Expression :=null;
+		var i : Integer := 3;
+		var newExpr : TimeModel::CCSLModel::ClockExpressionAndRelation::Expression := lastExpr;
+		var size : Integer = sources->size(); 
+		if(size = 1)then{
+			result := self.map intermediate_lastInit2Expression(sources->at(1),sources->at(1), 1);
+		}else{
+			lastExpr := self.map intermediate_lastInit2Expression(sources->at(1),sources->at(2), 1);
+			while (i <= size){
+				newExpr := self.map intermediate_lastInit2Expression(lastExpr,sources->at(i), i);
+				lastExpr := newExpr;
+				i := i + 1;
+			};
+			result := lastExpr;
+		}
+		endif;
+		}
+		
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+
+
+	
+	
+//Create an intermediate expression
+//create the expressions... 
+	mapping inMM1::ParallelAssignment::intermediate_firstInternal2Expression(an1 : Assignment, an2 : Assignment, nb : Integer):TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{ 
+		name := getNameOrUID(self.oclAsType(EObject))+'intermediate_firstInternal'+nb.toString();
+		type := seqOfExpressionDeclaration->select(rd | rd.name = "Inf")->first();
+		//from defs
+		
+		//from lets
+		
+
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+		 			bindable := theMainBlock.elements[name = getNameOrUID(an1.oclAsType(EObject))+'_executeIt']->first();
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Inf']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Inf).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(1).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(an2.oclAsType(EObject))+'_executeIt']->first();
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Inf']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Inf).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(2).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+
+	mapping inMM1::ParallelAssignment::intermediate_firstInternal2Expression(expr :TimeModel::CCSLModel::ClockExpressionAndRelation::Expression , an : Assignment, nb : Integer):TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{
+		name := getNameOrUID(self.oclAsType(EObject))+'intermediate_firstInternal'+nb.toString();
+		type := seqOfExpressionDeclaration->select(rd | rd.name = "Inf")->first();
+		//from defs
+		
+		//from lets
+		
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.expressions[name = expr.name]->first();
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Inf']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Inf).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(1).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(an.oclAsType(EObject))+'_executeIt']->first();
+					
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Inf']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Inf).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(2).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+	
+	mapping inMM1::ParallelAssignment::firstInternal2Expression():TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{
+		init{
+		//from defs
+		
+		//from lets
+		
+
+		var sources : Sequence(Assignment) := self.ownedAssignments->asSequence();
+		var lastExpr : TimeModel::CCSLModel::ClockExpressionAndRelation::Expression :=null;
+		var i : Integer := 3;
+		var newExpr : TimeModel::CCSLModel::ClockExpressionAndRelation::Expression := lastExpr;
+		var size : Integer = sources->size(); 
+		if(size = 1)then{
+			result := self.map intermediate_firstInternal2Expression(sources->at(1),sources->at(1), 1);
+		}else{
+			lastExpr := self.map intermediate_firstInternal2Expression(sources->at(1),sources->at(2), 1);
+			while (i <= size){
+				newExpr := self.map intermediate_firstInternal2Expression(lastExpr,sources->at(i), i);
+				lastExpr := newExpr;
+				i := i + 1;
+			};
+			result := lastExpr;
+		}
+		endif;
+		}
+		
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+
+
+	
+	
+//Create an intermediate expression
+//create the expressions... 
+	mapping inMM1::ParallelAssignment::intermediate_lastInternal2Expression(an1 : Assignment, an2 : Assignment, nb : Integer):TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{ 
+		name := getNameOrUID(self.oclAsType(EObject))+'intermediate_lastInternal'+nb.toString();
+		type := seqOfExpressionDeclaration->select(rd | rd.name = "Sup")->first();
+		//from defs
+		
+		//from lets
+				var prog : ToyProgram := self.oclAsType(ecore::EObject).eContainer().oclAsType(ToyProgram);
+		
+
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+		 			bindable := theMainBlock.elements[name = getNameOrUID(an1.oclAsType(EObject))+'_executeIt']->first();
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Sup']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Sup).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(1).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(an2.oclAsType(EObject))+'_executeIt']->first();
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Sup']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Sup).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(2).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+
+	mapping inMM1::ParallelAssignment::intermediate_lastInternal2Expression(expr :TimeModel::CCSLModel::ClockExpressionAndRelation::Expression , an : Assignment, nb : Integer):TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{
+		name := getNameOrUID(self.oclAsType(EObject))+'intermediate_lastInternal'+nb.toString();
+		type := seqOfExpressionDeclaration->select(rd | rd.name = "Sup")->first();
+		//from defs
+		
+		//from lets
+				var prog : ToyProgram := self.oclAsType(ecore::EObject).eContainer().oclAsType(ToyProgram);
+		
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.expressions[name = expr.name]->first();
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Sup']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Sup).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(1).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(an.oclAsType(EObject))+'_executeIt']->first();
+					
+					var seqAbstract : Sequence(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity) := seqOfExpressionDeclaration[name = 'Sup']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelExpression::Sup).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+					seqAbstract := seqAbstract->sortedBy(e | e.name); //just a way to have always the same order ?
+					_abstract := seqAbstract->at(2).oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity);
+				};
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+	
+	mapping inMM1::ParallelAssignment::lastInternal2Expression():TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{
+		init{
+		//from defs
+		
+		//from lets
+				var prog : ToyProgram := self.oclAsType(ecore::EObject).eContainer().oclAsType(ToyProgram);
+		
+
+		var sources : Sequence(Assignment) := self.ownedAssignments->asSequence();
+		var lastExpr : TimeModel::CCSLModel::ClockExpressionAndRelation::Expression :=null;
+		var i : Integer := 3;
+		var newExpr : TimeModel::CCSLModel::ClockExpressionAndRelation::Expression := lastExpr;
+		var size : Integer = sources->size(); 
+		if(size = 1)then{
+			result := self.map intermediate_lastInternal2Expression(sources->at(1),sources->at(1), 1);
+		}else{
+			lastExpr := self.map intermediate_lastInternal2Expression(sources->at(1),sources->at(2), 1);
+			while (i <= size){
+				newExpr := self.map intermediate_lastInternal2Expression(lastExpr,sources->at(i), i);
+				lastExpr := newExpr;
+				i := i + 1;
+			};
+			result := lastExpr;
+		}
+		endif;
+		}
+		
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+
+
+	mapping inMM1::Variable::oneInit2Expression():TimeModel::CCSLModel::ClockExpressionAndRelation::Expression
+	{
+		name := getNameOrUID(self.oclAsType(EObject))+'_OneTickAndNoMore_oneInit';
+		type := seqOfExpressionDeclaration->select(rd | rd.name = "OneTickAndNoMore")->first();
+		//from defs
+		
+		//from lets
+		
+
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(self.oclAsType(EObject))+'_initIt']->first();
+					_abstract := seqOfAbstractEntity[name = 'OneTickAndNoMoreClock' and container().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::ExpressionDeclaration).name = 'OneTickAndNoMore']->first();
+				};
+		end{
+			theMainBlock.expressions += result;
+		}
+	}
+
+
+
+	 	mapping inMM1::Variable::initIt2Clock() :TimeModel::Clock 
+		{
+			name:= getNameOrUID(self.oclAsType(EObject))+'_initIt';
+			tickingEvent := object TimeModel::Event{
+ 				referencedObjectRefs += self.oclAsType(EObject);
+				//referencedObjectRefs += self.oclAsType(EObject);
+				referencedObjectRefs += self.oclAsType(EObject).eClass().eAllOperations->select(op |op.name = "initialize")->first().oclAsType(EObject);
+			
+				name := 'evt_'+getNameOrUID(self.oclAsType(EObject))+'_initIt';
+			kind :=TimeModel::EventKind::undefined;
+						
+			};
+			type:= Kernel_Clock_Type;
+
+			end{
+				theMainBlock.elements += result;
+			}
+		}
+
+//relation stuff		
+	 	mapping inMM1::Statement::executeIt2Clock() :TimeModel::Clock 
+			when { ((self.oclIsKindOf(Assignment) or self.oclIsKindOf(ParallelAssignment)) 
+	 			--and self.oclAsType(ecore::EObject).eContainer().oclAsType(ToyLanguage).ownedStatement.exists(self)
+	 		) }
+		{
+			name:= getNameOrUID(self.oclAsType(EObject))+'_executeIt';
+			tickingEvent := object TimeModel::Event{
+ 				referencedObjectRefs += self.oclAsType(EObject);
+				//referencedObjectRefs += self.oclAsType(EObject);
+				referencedObjectRefs += self.oclAsType(EObject).eClass().eAllOperations->select(op |op.name = "execute")->first().oclAsType(EObject);
+			
+				name := 'evt_'+getNameOrUID(self.oclAsType(EObject))+'_executeIt';
+			kind :=TimeModel::EventKind::undefined;
+						
+			};
+			type:= Kernel_Clock_Type;
+
+			end{
+				theMainBlock.elements += result;
+			}
+		}
+
+//relation stuff		
+
+//relation stuff		
+	
+		mapping inMM1::ToyProgram::LastInitBeforeFirstExec42LastInitBeforeFirstExec(): TimeModel::CCSLModel::ClockExpressionAndRelation::Relation
+		{
+		 	name := getNameOrUID(self.oclAsType(EObject))+"Precedes_LastInitBeforeFirstExec";
+			type := seqOfRelationDeclaration->select(rd | rd.name = "Precedes")->first();
+			
+			
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+							bindable := self -> map lastInit2Expression()->asSequence()->first();
+					_abstract := seqOfRelationDeclaration[name = 'Precedes']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelRelation::KernelRelationDeclaration).leftEntity;
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+							bindable := self -> map firstExec2Expression()->asSequence()->first();
+					_abstract := seqOfRelationDeclaration[name = 'Precedes']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelRelation::KernelRelationDeclaration).rightEntity;
+				};
+		
+		theMainBlock.relations += result;
+		}
+		
+	
+
+//Create an intermediate relation
+	mapping inMM1::ToyProgram::intermediate_followCollectionOrder12followCollectionOrder(an1 : Statement, an2 : Statement, nbi : Integer, nbj : Integer):TimeModel::CCSLModel::ClockExpressionAndRelation::Relation
+	{
+		name := getNameOrUID(self.oclAsType(EObject))+'intermediate_followCollectionOrder'+nbi.toString()+"_"+nbj.toString();
+		var seqAbstract : Sequence(Stdlib::Element) := seqOfRelationDeclaration[name = 'Precedes']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelRelation::Precedence).allSubobjectsOfKind(TimeModel::CCSLModel::ClockExpressionAndRelation::AbstractEntity)->asSequence();
+		type := seqOfRelationDeclaration->select(rd | rd.name = "Precedes")->first();
+		
+		
+
+					bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(an1.oclAsType(EObject))+'_executeIt']->first();
+						_abstract := seqOfRelationDeclaration[name = 'Precedes']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelRelation::KernelRelationDeclaration).leftEntity;
+
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(an2.oclAsType(EObject))+'_executeIt']->first();
+						_abstract := seqOfRelationDeclaration[name = 'Precedes']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelRelation::KernelRelationDeclaration).rightEntity;
+
+				};
+		end{
+			theMainBlock.relations += result;
+		}
+	}
+	
+	mapping inMM1::ToyProgram::followCollectionOrder12followCollectionOrder()
+	{
+		init{
+			
+			
+			var sources : Sequence(Statement) := self.ownedStatements->asSequence();
+			var i : Integer := 1;
+			var j : Integer := 1;
+			var size : Integer = sources->size(); 
+			while (i <= size){
+				j := i+1;
+				while (j <= size){
+					theMainBlock.relations +=  self.map intermediate_followCollectionOrder12followCollectionOrder(sources->at(i),sources->at(j), i, j);
+					j := j + 1;
+				};
+				i := i + 1;
+			};
+		}
+	}
+
+		
+
+//relation stuff		
+	
+		mapping inMM1::ParallelAssignment::execFirstThenInternal22execFirstThenInternal(): TimeModel::CCSLModel::ClockExpressionAndRelation::Relation
+		{
+		 	name := getNameOrUID(self.oclAsType(EObject))+"Precedes_execFirstThenInternal";
+			type := seqOfRelationDeclaration->select(rd | rd.name = "Precedes")->first();
+			
+			
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(self.oclAsType(EObject))+'_executeIt']->first();
+					_abstract := seqOfRelationDeclaration[name = 'Precedes']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelRelation::KernelRelationDeclaration).leftEntity;
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+							bindable := self -> map firstInternal2Expression()->asSequence()->first();
+					_abstract := seqOfRelationDeclaration[name = 'Precedes']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelRelation::KernelRelationDeclaration).rightEntity;
+				};
+		
+		theMainBlock.relations += result;
+		}
+		
+	
+		mapping inMM1::ParallelAssignment::lastInternalThenNext52lastInternalThenNext(): TimeModel::CCSLModel::ClockExpressionAndRelation::Relation
+			when { 
+				
+							let prog : ToyProgram = self.oclAsType(ecore::EObject).eContainer().oclAsType(ToyProgram) in
+					
+				(prog.ownedStatements->size() > prog.ownedStatements->asOrderedSet()->indexOf(self)) 
+				
+}
+		{
+		 	name := getNameOrUID(self.oclAsType(EObject))+"Precedes_lastInternalThenNext";
+			type := seqOfRelationDeclaration->select(rd | rd.name = "Precedes")->first();
+			
+					var prog : ToyProgram := self.oclAsType(ecore::EObject).eContainer().oclAsType(ToyProgram);
+			
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+							bindable := self -> map lastInternal2Expression()->asSequence()->first();
+					_abstract := seqOfRelationDeclaration[name = 'Precedes']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelRelation::KernelRelationDeclaration).leftEntity;
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(prog.ownedStatements->at(prog.ownedStatements->asOrderedSet()->indexOf(self)+1).oclAsType(EObject))+'_executeIt']->first();
+					_abstract := seqOfRelationDeclaration[name = 'Precedes']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelRelation::KernelRelationDeclaration).rightEntity;
+				};
+		
+		theMainBlock.relations += result;
+		}
+		
+
+//relation stuff		
+	
+		mapping inMM1::Variable::initOnlyOnce22initOnlyOnce(): TimeModel::CCSLModel::ClockExpressionAndRelation::Relation
+		{
+		 	name := getNameOrUID(self.oclAsType(EObject))+"Coincides_initOnlyOnce";
+			type := seqOfRelationDeclaration->select(rd | rd.name = "Coincides")->first();
+			
+			
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+							bindable := self -> map oneInit2Expression()->asSequence()->first();
+					_abstract := seqOfRelationDeclaration[name = 'Coincides']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelRelation::KernelRelationDeclaration).leftEntity;
+				};
+				bindings += object TimeModel::CCSLModel::ClockExpressionAndRelation::Binding{
+					bindable := theMainBlock.elements[name = getNameOrUID(self.oclAsType(EObject))+'_initIt']->first();
+					_abstract := seqOfRelationDeclaration[name = 'Coincides']->first().oclAsType(TimeModel::CCSLModel::ClockExpressionAndRelation::KernelRelation::KernelRelationDeclaration).rightEntity;
+				};
+		
+		theMainBlock.relations += result;
+		}
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mapping inMM1::ToyProgram::toyLanguage2FeedBack() : FeedBack::ActionModel {
+	    theFeedBackSpec := result;
+		importStatements+= object FeedBack::ImportStatement{
+			importURI := getModelPath(ccsl.objectsOfType(TimeModel::Clock)->asSequence()->first().oclAsType(EObject));
+		}; 
+	getVeryAllElementsFromResourceSetOf(self.oclAsType(EObject), Variable.oclAsType(EClass)).oclAsType(Variable)->map initIt2MSE();
+	getVeryAllElementsFromResourceSetOf(self.oclAsType(EObject), Statement.oclAsType(EClass)).oclAsType(Statement)->map executeIt2MSE();
+}		
+
+
+	 	mapping inMM1::Variable::initIt2MSE() :FeedBack::ModelSpecificEvent 
+		{
+			name:= 'MSE_'+getNameOrUID(self.oclAsType(EObject))+'_initIt';
+
+				caller := self.oclAsType(EObject);
+				action := self.oclAsType(EObject).eClass().eAllOperations->select(op |op.name = "initialize")->first();
+				solverEvent := theMainBlock.elements[TimeModel::Clock]->select(c|c.name=getNameOrUID(self.oclAsType(EObject))+'_initIt')->first().oclAsType(EObject);
+				
+			end{
+				theFeedBackSpec.events += result;
+				seqOfMSE += result
+			}
+		}
+	 	mapping inMM1::Statement::executeIt2MSE() :FeedBack::ModelSpecificEvent 
+			when { ((self.oclIsKindOf(Assignment) or self.oclIsKindOf(ParallelAssignment)) 
+	 			--and self.oclAsType(ecore::EObject).eContainer().oclAsType(ToyLanguage).ownedStatement.exists(self)
+	 		) }
+		{
+			name:= 'MSE_'+getNameOrUID(self.oclAsType(EObject))+'_executeIt';
+
+				caller := self.oclAsType(EObject);
+				action := self.oclAsType(EObject).eClass().eAllOperations->select(op |op.name = "execute")->first();
+				solverEvent := theMainBlock.elements[TimeModel::Clock]->select(c|c.name=getNameOrUID(self.oclAsType(EObject))+'_executeIt')->first().oclAsType(EObject);
+				
+			end{
+				theFeedBackSpec.events += result;
+				seqOfMSE += result
+			}
+		}
+			
+		
+
+
+
+
+
+
+//priority stuff
+
+mapping inMM1::ToyProgram::toyLanguage2Priority()  :Priority::PrioritySpecification  {
+	thePrioritySpec := result;
+	importedModel := object Priority::ImportStatement{
+		importURI := getModelPath(ccsl.objectsOfType(TimeModel::Clock)->asSequence()->first().oclAsType(EObject));
+	}; 
+}	
+
+
+
+

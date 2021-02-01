@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="toyLanguage" nsURI="http://www.polytech.unice.fr/toyLanguage"
+    nsPrefix="toyLanguage">
+  <eClassifiers xsi:type="ecore:EClass" name="ToyProgram" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedVariables" upperBound="-1"
+        eType="#//Variable" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedStatements" upperBound="-1"
+        eType="#//Statement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//NamedElement">
+    <eOperations name="initialize"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//VarType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="initialValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Operation" abstract="true" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="leftVariable" lowerBound="1"
+        eType="#//Variable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rightVariable" lowerBound="1"
+        eType="#//Variable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Addition" eSuperTypes="#//Operation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Soustraction" eSuperTypes="#//Operation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//Variable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="#//Operation"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="VarType">
+    <eLiterals name="int"/>
+    <eLiterals name="double" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Statement" abstract="true" eSuperTypes="#//NamedElement">
+    <eOperations name="execute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ParallelAssignment" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedAssignments" upperBound="-1"
+        eType="#//Assignment" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

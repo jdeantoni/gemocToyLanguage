@@ -1,0 +1,7 @@
+program test1
+	Var i : int = 3.0
+	Var j : int = 6.0
+	Var k : double = 4.2
+	a1 -> Assign j with (j + i)
+	pa1 -> [a2 -> i := (j + j) | a3 -> k := (k - i)] //should be refused, non determinist ?
+	a4  -> 	i := (i + i)

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/fr.unice.polytech.si5.toylanguage.abstractsyntax/src-gen"
+    creationIcons="false" editDirectory="/fr.unice.polytech.si5.toylanguage.abstractsyntax.edit/src-gen"
+    editorDirectory="/fr.unice.polytech.si5.toylanguage.abstractsyntax.editor/src-gen"
+    modelPluginID="fr.unice.polytech.si5.toylanguage.abstractsyntax" modelName="ToyLanguage"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" codeFormatting="true"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>toyLanguage.ecore</foreignModel>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="ToyLanguage" basePackage="fr.unice.polytech.si5.toylanguage.abstractsyntax"
+      disposableProviderFactory="true" ecorePackage="toyLanguage.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="toyLanguage.ecore#//VarType">
+      <genEnumLiterals ecoreEnumLiteral="toyLanguage.ecore#//VarType/int"/>
+      <genEnumLiterals ecoreEnumLiteral="toyLanguage.ecore#//VarType/double"/>
+    </genEnums>
+    <genClasses ecoreClass="toyLanguage.ecore#//ToyProgram">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference toyLanguage.ecore#//ToyProgram/ownedVariables"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference toyLanguage.ecore#//ToyProgram/ownedStatements"/>
+    </genClasses>
+    <genClasses ecoreClass="toyLanguage.ecore#//Variable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute toyLanguage.ecore#//Variable/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute toyLanguage.ecore#//Variable/initialValue"/>
+      <genOperations ecoreOperation="toyLanguage.ecore#//Variable/initialize"/>
+    </genClasses>
+    <genClasses ecoreClass="toyLanguage.ecore#//Operation">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference toyLanguage.ecore#//Operation/leftVariable"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference toyLanguage.ecore#//Operation/rightVariable"/>
+    </genClasses>
+    <genClasses ecoreClass="toyLanguage.ecore#//Addition"/>
+    <genClasses ecoreClass="toyLanguage.ecore#//Soustraction"/>
+    <genClasses ecoreClass="toyLanguage.ecore#//Assignment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference toyLanguage.ecore#//Assignment/variable"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference toyLanguage.ecore#//Assignment/operation"/>
+    </genClasses>
+    <genClasses ecoreClass="toyLanguage.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute toyLanguage.ecore#//NamedElement/name"/>
+    </genClasses>
+    <genClasses ecoreClass="toyLanguage.ecore#//Statement">
+      <genOperations ecoreOperation="toyLanguage.ecore#//Statement/execute"/>
+    </genClasses>
+    <genClasses ecoreClass="toyLanguage.ecore#//ParallelAssignment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference toyLanguage.ecore#//ParallelAssignment/ownedAssignments"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

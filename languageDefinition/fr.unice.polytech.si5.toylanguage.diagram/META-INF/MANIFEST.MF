@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: fr.unice.polytech.si5.toylanguage.diagram
+Bundle-ManifestVersion: 2
+Bundle-Name: fr.unice.polytech.si5.toylanguage.diagram
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: fr.unice.polytech.si5.toylanguage.diagram; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: javax.inject,
+ com.google.guava,
+ com.google.inject,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.elk.core,
+ org.eclipse.elk.alg.layered,
+ org.eclipse.elk.alg.graphviz.layouter;resolution:=optional,
+ de.cau.cs.kieler.klighd,
+ de.cau.cs.kieler.klighd.krendering,
+ de.cau.cs.kieler.klighd.krendering.extensions,
+ de.cau.cs.kieler.klighd.piccolo,
+ de.cau.cs.kieler.klighd.ui,
+ de.cau.cs.kieler.klighd.ui.contrib3x,
+ de.cau.cs.kieler.klighd.ui.view;resolution:=optional,
+ org.eclipse.ui,
+ org.eclipse.ui.ide.application,
+ org.eclipse.ui.navigator.resources,
+ org.eclipse.ui.views.log,
+ org.eclipse.core.resources,
+ org.eclipse.emf,
+ org.eclipse.xtext.ui;resolution:=optional
+Import-Package: fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

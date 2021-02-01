@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/description/tool/1.1.0" name="diagram" version="12.0.0.2017041100">
+  <ownedViewpoints name="ToyLanguageViewpoint" modelFileExtension="toy">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="program" initialisation="true" showOnStartup="true" domainClass="toyLanguage::ToyProgram" enablePopupBars="true">
+      <metamodel href="../../fr.unice.polytech.si5.toylanguage.abstractsyntax/model/toyLanguage.ecore#/"/>
+      <layout xsi:type="description_1:CustomLayoutConfiguration" id="org.eclipse.elk.layered" label="ELK Layered" description="Layer-based algorithm provided by the Eclipse Layout Kernel. Arranges as many edges as possible into one direction by placing nodes into subsequent layers. This implementation supports different routing styles (straight, orthogonal, splines); if orthogonal routing is selected, arbitrary port constraints are respected, thus enabling the layout of block diagrams such as actor-oriented models or circuit schematics. Furthermore, full layout of compound graphs with cross-hierarchy edges is supported when the respective option is activated on the top level."/>
+      <defaultLayer name="Default">
+        <nodeMappings name="variable" domainClass="toyLanguage::Variable">
+          <style xsi:type="style:DotDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_blue']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_blue']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+          </style>
+        </nodeMappings>
+        <nodeMappings name="Assignment" semanticCandidatesExpression="[self.ownedStatements/]" domainClass="toyLanguage::Assignment">
+          <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelExpression="[self.variable.name +' := ('+self.operation.leftVariable.name+ if(self.operation.oclIsKindOf(Addition)) then '+' else '-' endif +self.operation.rightVariable.name+')'/]" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="precedence" sourceMapping="//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='Assignment'] //@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment']" targetMapping="//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='Assignment'] //@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment']" targetFinderExpression="[self.eContainer().oclAsType(ToyProgram).ownedStatements->at(self.eContainer().oclAsType(ToyProgram).ownedStatements->indexOf(self)+1)/]">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12" showIcon="false">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <containerMappings name="ParallelAssignment" domainClass="toyLanguage::ParallelAssignment" childrenPresentation="List">
+          <subNodeMappings name="internalAssignment" semanticCandidatesExpression="[self.ownedAssignments/]" domainClass="toyLanguage::Assignment">
+            <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelExpression="[self.variable.name +' := ('+self.operation.leftVariable.name+ if(self.operation.oclIsKindOf(Addition)) then '+' else '-' endif +self.operation.rightVariable.name+')'/]" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+            </style>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+          </style>
+        </containerMappings>
+      </defaultLayer>
+      <additionalLayers name="Debug" activeByDefault="true">
+        <toolSections name="Debug">
+          <ownedTools xsi:type="tool:PopupMenu" name="Gemoc">
+            <menuItemDescription xsi:type="tool:OperationAction" name="Debug" icon="/org.eclipse.gemoc.executionframework.extensions.sirius/icons/debug_exc.gif">
+              <view name="views"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool:ExternalJavaAction" name="Debug" icon="/org.eclipse.gemoc.executionframework.extensions.sirius/icons/debug_exc.gif" id="org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.sirius.action.gemocDebugAs"/>
+              </initialOperation>
+            </menuItemDescription>
+            <menuItemDescription xsi:type="tool:OperationAction" name="Toggle breakpoint" icon="/org.eclipse.gemoc.executionframework.extensions.sirius/icons/debug_exc.gif">
+              <view name="views"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool:ExternalJavaAction" name="Toggle Gemoc breakpoint" icon="/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint.gif" id="org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.sirius.action.GemocSequentialToggleBreakpointAction"/>
+              </initialOperation>
+            </menuItemDescription>
+            <menuItemDescription xsi:type="tool:OperationAction" name="Toggle conditional breakpoint" icon="/org.eclipse.gemoc.executionframework.extensions.sirius/icons/debug_exc.gif">
+              <view name="views"/>
+              <initialOperation>
+                <firstModelOperations xsi:type="tool:ExternalJavaAction" name="Toggle Gemoc conditional breakpoint" icon="/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint.gif" id="org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.sirius.action.GemocSequentialToggleConditionalBreakpointAction"/>
+              </initialOperation>
+            </menuItemDescription>
+          </ownedTools>
+        </toolSections>
+        <decorationDescriptionsSet>
+          <decorationDescriptions xsi:type="description_1:MappingBasedDecoration" name="Enabled breakpoint" position="WEST" preconditionExpression="service:self.hasEnabledBreakpoint" imageExpression="/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint_enabled.gif" mappings="//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='variable'] //@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='Assignment'] //@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@edgeMappings[name='precedence'] //@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment'] //@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment']/@subNodeMappings[name='internalAssignment']"/>
+          <decorationDescriptions xsi:type="description_1:MappingBasedDecoration" name="Disabled breakpoint" position="WEST" preconditionExpression="service:self.hasDisabledBreakpoint" imageExpression="/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint_disabled.gif" mappings="//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='variable'] //@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='Assignment'] //@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@edgeMappings[name='precedence'] //@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment'] //@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment']/@subNodeMappings[name='internalAssignment']"/>
+        </decorationDescriptionsSet>
+        <customization>
+          <vsmElementCustomizations xsi:type="description:VSMElementCustomization" predicateExpression="service:self.isCurrentInstruction">
+            <featureCustomizations xsi:type="description:EReferenceCustomization" applyOnAll="true" referenceName="borderColor" value="//@userColorsPalettes[name='program%20Palette']/@entries[name='current%20instruction']"/>
+            <featureCustomizations xsi:type="description:EReferenceCustomization" applyOnAll="true" referenceName="strokeColor" value="//@userColorsPalettes[name='program%20Palette']/@entries[name='current%20instruction']"/>
+            <featureCustomizations xsi:type="description:EReferenceCustomization" applyOnAll="true" referenceName="labelColor" value="//@userColorsPalettes[name='program%20Palette']/@entries[name='current%20instruction']"/>
+          </vsmElementCustomizations>
+        </customization>
+      </additionalLayers>
+      <additionalLayers name="Animation">
+        <customization>
+          <vsmElementCustomizations xsi:type="description:VSMElementCustomization">
+            <featureCustomizations xsi:type="description:EAttributeCustomization" appliedOn="//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='variable']/@style" attributeName="labelExpression" value="[self.name +'='+self.getCurrentValue()/]"/>
+          </vsmElementCustomizations>
+          <vsmElementCustomizations xsi:type="description:VSMElementCustomization" predicateExpression="service:self.hasBeenActivated">
+            <featureCustomizations xsi:type="description:EReferenceCustomization" appliedOn="//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='Assignment']/@style //@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment']/@subNodeMappings[name='internalAssignment']/@style" referenceName="labelColor">
+              <value href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+            </featureCustomizations>
+          </vsmElementCustomizations>
+        </customization>
+      </additionalLayers>
+    </ownedRepresentations>
+    <ownedJavaExtensions qualifiedClassName="fr.unice.polytech.si5.toylanguage.concretesyntax.diagram.Services"/>
+    <ownedJavaExtensions qualifiedClassName="fr.unice.polytech.si5.toylanguage.concretesyntax.diagram.services.ProgramDebugServices"/>
+    <ownedJavaExtensions qualifiedClassName="fr.unice.polytech.si5.toylanguage.concretesyntax.diagram.services.ProgramAnimationServices"/>
+  </ownedViewpoints>
+  <userColorsPalettes name="program Palette">
+    <entries xsi:type="description:UserFixedColor" red="255" green="255" blue="0" name="current instruction"/>
+  </userColorsPalettes>
+</description:Group>

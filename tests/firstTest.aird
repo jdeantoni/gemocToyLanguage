@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:toyLanguage="http://www.polytech.unice.fr/toyLanguage" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
+  <viewpoint:DAnalysis uid="_Jc5YoF9OEeuZqoJFWK8F0A" selectedViews="_UZ7t8F9OEeuZqoJFWK8F0A" version="14.3.1.202003261200">
+    <semanticResources>firstTest.toy</semanticResources>
+    <ownedViews xmi:type="viewpoint:DView" uid="_UZ7t8F9OEeuZqoJFWK8F0A">
+      <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']"/>
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_UZ9jIF9OEeuZqoJFWK8F0A" name="program" repPath="#_UZ8VAF9OEeuZqoJFWK8F0A" changeId="3250cb0f-585e-4a02-a7d0-2a868159bfc9">
+        <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']"/>
+        <target xmi:type="toyLanguage:ToyProgram" href="firstTest.toy#/"/>
+      </ownedRepresentationDescriptors>
+    </ownedViews>
+  </viewpoint:DAnalysis>
+  <diagram:DSemanticDiagram uid="_UZ8VAF9OEeuZqoJFWK8F0A">
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_UZ9jIV9OEeuZqoJFWK8F0A" source="GMF_DIAGRAMS">
+      <data xmi:type="notation:Diagram" xmi:id="_UZ9jIl9OEeuZqoJFWK8F0A" type="Sirius" element="_UZ8VAF9OEeuZqoJFWK8F0A" measurementUnit="Pixel">
+        <children xmi:type="notation:Node" xmi:id="_UbS_4F9OEeuZqoJFWK8F0A" type="2001" element="_Uahj0F9OEeuZqoJFWK8F0A">
+          <children xmi:type="notation:Node" xmi:id="_UbTm8F9OEeuZqoJFWK8F0A" type="5002">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_UbTm8V9OEeuZqoJFWK8F0A" y="5"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_UbWqQF9OEeuZqoJFWK8F0A" type="3002" element="_UaknIF9OEeuZqoJFWK8F0A">
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_UbWqQV9OEeuZqoJFWK8F0A" fontName="Noto Sans"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbWqQl9OEeuZqoJFWK8F0A"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_UbS_4V9OEeuZqoJFWK8F0A" fontColor="7490599" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbS_4l9OEeuZqoJFWK8F0A" x="12" y="10" width="51" height="50"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_UbUOAF9OEeuZqoJFWK8F0A" type="2001" element="_UanqcV9OEeuZqoJFWK8F0A">
+          <children xmi:type="notation:Node" xmi:id="_UbUOA19OEeuZqoJFWK8F0A" type="5002">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_UbUOBF9OEeuZqoJFWK8F0A" y="5"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_UbWqQ19OEeuZqoJFWK8F0A" type="3002" element="_Uanqcl9OEeuZqoJFWK8F0A">
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_UbWqRF9OEeuZqoJFWK8F0A" fontName="Noto Sans"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbWqRV9OEeuZqoJFWK8F0A"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_UbUOAV9OEeuZqoJFWK8F0A" fontColor="7490599" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbUOAl9OEeuZqoJFWK8F0A" x="96" y="10" width="54" height="50"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_UbU1EF9OEeuZqoJFWK8F0A" type="2001" element="_UaoRgF9OEeuZqoJFWK8F0A">
+          <children xmi:type="notation:Node" xmi:id="_UbVcIF9OEeuZqoJFWK8F0A" type="5002">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_UbVcIV9OEeuZqoJFWK8F0A" y="5"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_UbWqRl9OEeuZqoJFWK8F0A" type="3002" element="_UaoRgV9OEeuZqoJFWK8F0A">
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_UbWqR19OEeuZqoJFWK8F0A" fontName="Noto Sans"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbWqSF9OEeuZqoJFWK8F0A"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_UbU1EV9OEeuZqoJFWK8F0A" fontColor="7490599" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbU1El9OEeuZqoJFWK8F0A" x="180" y="12" width="49" height="48"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_UbVcIl9OEeuZqoJFWK8F0A" type="2001" element="_Uao4kF9OEeuZqoJFWK8F0A">
+          <children xmi:type="notation:Node" xmi:id="_UbVcJV9OEeuZqoJFWK8F0A" type="5002">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_UbVcJl9OEeuZqoJFWK8F0A" y="5"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_UbWqSV9OEeuZqoJFWK8F0A" type="3003" element="_UawNUF9OEeuZqoJFWK8F0A">
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_UbWqSl9OEeuZqoJFWK8F0A" fontName="Noto Sans"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbWqS19OEeuZqoJFWK8F0A"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_UbVcI19OEeuZqoJFWK8F0A" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbVcJF9OEeuZqoJFWK8F0A" x="31" y="135" width="54" height="30"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_UbVcJ19OEeuZqoJFWK8F0A" type="2001" element="_Uaw0YV9OEeuZqoJFWK8F0A">
+          <children xmi:type="notation:Node" xmi:id="_UbWDMF9OEeuZqoJFWK8F0A" type="5002">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_UbWDMV9OEeuZqoJFWK8F0A" y="5"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_UbXRUF9OEeuZqoJFWK8F0A" type="3003" element="_UaxbcF9OEeuZqoJFWK8F0A">
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_UbXRUV9OEeuZqoJFWK8F0A" fontName="Noto Sans"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbXRUl9OEeuZqoJFWK8F0A"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_UbVcKF9OEeuZqoJFWK8F0A" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbVcKV9OEeuZqoJFWK8F0A" x="240" y="135" width="73" height="30"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_UbWDMl9OEeuZqoJFWK8F0A" type="2003" element="_UayCgV9OEeuZqoJFWK8F0A">
+          <children xmi:type="notation:Node" xmi:id="_UbWDNV9OEeuZqoJFWK8F0A" type="5007"/>
+          <children xmi:type="notation:Node" xmi:id="_UbWDNl9OEeuZqoJFWK8F0A" type="7004">
+            <children xmi:type="notation:Node" xmi:id="_UbXRU19OEeuZqoJFWK8F0A" type="3010" element="_Ua4wMF9OEeuZqoJFWK8F0A">
+              <styles xmi:type="notation:FontStyle" xmi:id="_UbXRVF9OEeuZqoJFWK8F0A" fontName="Noto Sans" fontHeight="12"/>
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_UbXRVV9OEeuZqoJFWK8F0A" x="11" y="2"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_UbXRVl9OEeuZqoJFWK8F0A" type="3010" element="_UbAE8F9OEeuZqoJFWK8F0A">
+              <styles xmi:type="notation:FontStyle" xmi:id="_UbXRV19OEeuZqoJFWK8F0A" fontName="Noto Sans" fontHeight="12"/>
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_UbXRWF9OEeuZqoJFWK8F0A" x="8" y="24"/>
+            </children>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_UbWDN19OEeuZqoJFWK8F0A"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_UbWDOF9OEeuZqoJFWK8F0A"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_UbWDM19OEeuZqoJFWK8F0A" fontName="Noto Sans" fontHeight="12"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbWDNF9OEeuZqoJFWK8F0A" x="120" y="108" width="86" height="85"/>
+        </children>
+        <styles xmi:type="notation:DiagramStyle" xmi:id="_UZ9jI19OEeuZqoJFWK8F0A"/>
+        <edges xmi:type="notation:Edge" xmi:id="_UbXRWV9OEeuZqoJFWK8F0A" type="4001" element="_UbRKsF9OEeuZqoJFWK8F0A" source="_UbVcIl9OEeuZqoJFWK8F0A" target="_UbWDMl9OEeuZqoJFWK8F0A">
+          <children xmi:type="notation:Node" xmi:id="_UbX4YF9OEeuZqoJFWK8F0A" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbX4YV9OEeuZqoJFWK8F0A" x="-2" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_UbX4Yl9OEeuZqoJFWK8F0A" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbX4Y19OEeuZqoJFWK8F0A" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_UbX4ZF9OEeuZqoJFWK8F0A" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbX4ZV9OEeuZqoJFWK8F0A" x="-4" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_UbXRWl9OEeuZqoJFWK8F0A"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_UbXRW19OEeuZqoJFWK8F0A" fontName="Noto Sans" fontHeight="12"/>
+          <styles xmi:type="notation:StringValueStyle" xmi:id="_Uf9dcV9OEeuZqoJFWK8F0A" name="junctionPoints" stringValue="()"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_UbXRXF9OEeuZqoJFWK8F0A" points="[24, -1, -35, 0]$[59, -1, 0, 0]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UbX4Zl9OEeuZqoJFWK8F0A" id="(0.5555555555555556,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UbYfcF9OEeuZqoJFWK8F0A" id="(0.0,0.5)"/>
+        </edges>
+        <edges xmi:type="notation:Edge" xmi:id="_UbYfcV9OEeuZqoJFWK8F0A" type="4001" element="_UbRxwF9OEeuZqoJFWK8F0A" source="_UbWDMl9OEeuZqoJFWK8F0A" target="_UbVcJ19OEeuZqoJFWK8F0A">
+          <children xmi:type="notation:Node" xmi:id="_UbYfdV9OEeuZqoJFWK8F0A" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbYfdl9OEeuZqoJFWK8F0A" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_UbYfd19OEeuZqoJFWK8F0A" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbYfeF9OEeuZqoJFWK8F0A" x="31" y="9"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_UbYfeV9OEeuZqoJFWK8F0A" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UbYfel9OEeuZqoJFWK8F0A" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_UbYfcl9OEeuZqoJFWK8F0A"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_UbYfc19OEeuZqoJFWK8F0A" fontName="Noto Sans" fontHeight="12"/>
+          <styles xmi:type="notation:StringValueStyle" xmi:id="_Uf9dcF9OEeuZqoJFWK8F0A" name="junctionPoints" stringValue="()"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_UbYfdF9OEeuZqoJFWK8F0A" points="[0, 0, -36, -1]$[36, 1, 0, 0]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UbYfe19OEeuZqoJFWK8F0A" id="(1.0,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UbYffF9OEeuZqoJFWK8F0A" id="(0.0,0.5)"/>
+        </edges>
+      </data>
+    </ownedAnnotationEntries>
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_UbSY0F9OEeuZqoJFWK8F0A" source="DANNOTATION_CUSTOMIZATION_KEY">
+      <data xmi:type="diagram:ComputedStyleDescriptionRegistry" uid="_UbSY0V9OEeuZqoJFWK8F0A"/>
+    </ownedAnnotationEntries>
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_Uahj0F9OEeuZqoJFWK8F0A" name="i" width="3" height="3" resizeKind="NSEW">
+      <target xmi:type="toyLanguage:Variable" href="firstTest.toy#//@ownedVariables.0"/>
+      <semanticElements xmi:type="toyLanguage:Variable" href="firstTest.toy#//@ownedVariables.0"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:Dot" uid="_UaknIF9OEeuZqoJFWK8F0A" labelSize="12" showIcon="false" labelColor="39,76,114" borderSize="1" borderSizeComputationExpression="1" borderColor="39,76,114" labelPosition="node" backgroundColor="255,255,255">
+        <description xmi:type="style:DotDescription" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='variable']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='variable']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_UanqcV9OEeuZqoJFWK8F0A" name="j" width="3" height="3" resizeKind="NSEW">
+      <target xmi:type="toyLanguage:Variable" href="firstTest.toy#//@ownedVariables.1"/>
+      <semanticElements xmi:type="toyLanguage:Variable" href="firstTest.toy#//@ownedVariables.1"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:Dot" uid="_Uanqcl9OEeuZqoJFWK8F0A" labelSize="12" showIcon="false" labelColor="39,76,114" borderSize="1" borderSizeComputationExpression="1" borderColor="39,76,114" labelPosition="node" backgroundColor="255,255,255">
+        <description xmi:type="style:DotDescription" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='variable']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='variable']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_UaoRgF9OEeuZqoJFWK8F0A" name="k" width="3" height="3" resizeKind="NSEW">
+      <target xmi:type="toyLanguage:Variable" href="firstTest.toy#//@ownedVariables.2"/>
+      <semanticElements xmi:type="toyLanguage:Variable" href="firstTest.toy#//@ownedVariables.2"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:Dot" uid="_UaoRgV9OEeuZqoJFWK8F0A" labelSize="12" showIcon="false" labelColor="39,76,114" borderSize="1" borderSizeComputationExpression="1" borderColor="39,76,114" labelPosition="node" backgroundColor="255,255,255">
+        <description xmi:type="style:DotDescription" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='variable']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='variable']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_Uao4kF9OEeuZqoJFWK8F0A" name="j := (j+i)" outgoingEdges="_UbRKsF9OEeuZqoJFWK8F0A" width="3" height="3" resizeKind="NSEW">
+      <target xmi:type="toyLanguage:Assignment" href="firstTest.toy#//@ownedStatements.0"/>
+      <semanticElements xmi:type="toyLanguage:Assignment" href="firstTest.toy#//@ownedStatements.0"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:Square" uid="_UawNUF9OEeuZqoJFWK8F0A" labelSize="12" showIcon="false" labelPosition="node" color="255,245,181">
+        <description xmi:type="style:SquareDescription" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='Assignment']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='Assignment']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DNode" uid="_Uaw0YV9OEeuZqoJFWK8F0A" name="i := (i+i)" incomingEdges="_UbRxwF9OEeuZqoJFWK8F0A" width="3" height="3" resizeKind="NSEW">
+      <target xmi:type="toyLanguage:Assignment" href="firstTest.toy#//@ownedStatements.2"/>
+      <semanticElements xmi:type="toyLanguage:Assignment" href="firstTest.toy#//@ownedStatements.2"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:Square" uid="_UaxbcF9OEeuZqoJFWK8F0A" labelSize="12" showIcon="false" labelPosition="node" color="255,245,181">
+        <description xmi:type="style:SquareDescription" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='Assignment']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@nodeMappings[name='Assignment']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DNodeList" uid="_UayCgV9OEeuZqoJFWK8F0A" name="pa1" outgoingEdges="_UbRxwF9OEeuZqoJFWK8F0A" incomingEdges="_UbRKsF9OEeuZqoJFWK8F0A">
+      <target xmi:type="toyLanguage:ParallelAssignment" href="firstTest.toy#//@ownedStatements.1"/>
+      <semanticElements xmi:type="toyLanguage:ParallelAssignment" href="firstTest.toy#//@ownedStatements.1"/>
+      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_UaypkF9OEeuZqoJFWK8F0A" labelSize="12" showIcon="false" borderSize="1" borderSizeComputationExpression="1" foregroundColor="204,242,166">
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment']"/>
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_Ua4wMF9OEeuZqoJFWK8F0A" name="i := (j+j)">
+        <target xmi:type="toyLanguage:Assignment" href="firstTest.toy#//@ownedStatements.1/@ownedAssignments.0"/>
+        <semanticElements xmi:type="toyLanguage:Assignment" href="firstTest.toy#//@ownedStatements.1/@ownedAssignments.0"/>
+        <ownedStyle xmi:type="diagram:Square" uid="_Ua_d4F9OEeuZqoJFWK8F0A" labelSize="12" showIcon="false" labelPosition="node" color="253,206,137">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment']/@subNodeMappings[name='internalAssignment']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment']/@subNodeMappings[name='internalAssignment']"/>
+      </ownedElements>
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_UbAE8F9OEeuZqoJFWK8F0A" name="k := (k-i)">
+        <target xmi:type="toyLanguage:Assignment" href="firstTest.toy#//@ownedStatements.1/@ownedAssignments.1"/>
+        <semanticElements xmi:type="toyLanguage:Assignment" href="firstTest.toy#//@ownedStatements.1/@ownedAssignments.1"/>
+        <ownedStyle xmi:type="diagram:Square" uid="_UbAsAF9OEeuZqoJFWK8F0A" labelSize="12" showIcon="false" labelPosition="node" color="253,206,137">
+          <description xmi:type="style:SquareDescription" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment']/@subNodeMappings[name='internalAssignment']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@containerMappings[name='ParallelAssignment']/@subNodeMappings[name='internalAssignment']"/>
+      </ownedElements>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_UbRKsF9OEeuZqoJFWK8F0A" sourceNode="_Uao4kF9OEeuZqoJFWK8F0A" targetNode="_UayCgV9OEeuZqoJFWK8F0A">
+      <target xmi:type="toyLanguage:Assignment" href="firstTest.toy#//@ownedStatements.0"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_UbRKsV9OEeuZqoJFWK8F0A" size="2">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@edgeMappings[name='precedence']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_UbRKsl9OEeuZqoJFWK8F0A" labelSize="12" showIcon="false"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@edgeMappings[name='precedence']"/>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_UbRxwF9OEeuZqoJFWK8F0A" sourceNode="_UayCgV9OEeuZqoJFWK8F0A" targetNode="_Uaw0YV9OEeuZqoJFWK8F0A">
+      <target xmi:type="toyLanguage:ParallelAssignment" href="firstTest.toy#//@ownedStatements.1"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_UbRxwV9OEeuZqoJFWK8F0A" size="2">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@edgeMappings[name='precedence']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_UbRxwl9OEeuZqoJFWK8F0A" labelSize="12" showIcon="false"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer/@edgeMappings[name='precedence']"/>
+    </ownedDiagramElements>
+    <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']"/>
+    <filterVariableHistory xmi:type="diagram:FilterVariableHistory" uid="_UZ8VAV9OEeuZqoJFWK8F0A"/>
+    <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@defaultLayer"/>
+    <activatedLayers xmi:type="description_1:AdditionalLayer" href="platform:/plugin/fr.unice.polytech.si5.toylanguage.concretesyntax.diagram/description/diagram.odesign#//@ownedViewpoints[name='ToyLanguageViewpoint']/@ownedRepresentations[name='program']/@additionalLayers[name='Debug']"/>
+    <target xmi:type="toyLanguage:ToyProgram" href="firstTest.toy#/"/>
+  </diagram:DSemanticDiagram>
+</xmi:XMI>

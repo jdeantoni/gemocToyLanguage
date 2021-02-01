@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+   <diagramSynthesis
+         class="fr.unice.polytech.si5.toylanguage.diagram.ToyProgramDiagramSynthesis"
+         id="fr.unice.polytech.si5.toylanguage.diagram.ToyProgramDiagramSynthesis">
+   </diagramSynthesis>
+   </extension>
+<extension
+      point="org.eclipse.ui.commands">
+   <category
+         description="ToyProgram diagrams"
+         id="fr.unice.polytech.si5.toylanguage.diagram.ToyProgramDiagrams"
+         name="ToyProgramDiagrams">
+   </category>
+   <command
+         categoryId="fr.unice.polytech.si5.toylanguage.diagram.ToyProgramDiagrams"
+         defaultHandler="fr.unice.polytech.si5.toylanguage.diagram.OpenDiagramHandler"
+         description="Primitive helper command that opens KLighD-based ToyProgram diagrams."
+         id="fr.unice.polytech.si5.toylanguage.diagram.openToyProgramDiagram"
+         name="Open ToyProgram diagram">
+   </command>
+</extension>
+
+<extension
+      point="org.eclipse.ui.menus">
+   <menuContribution
+         locationURI="popup:org.eclipse.ui.popup.any?before=additions">
+      <command
+            commandId="fr.unice.polytech.si5.toylanguage.diagram.openToyProgramDiagram"
+            label="Open ToyProgram diagram"
+            style="push">
+         <visibleWhen
+               checkEnabled="false">
+            <or>
+               <and>
+                  <with
+                        variable="activeEditor">
+                     <instanceof
+                           value="org.eclipse.xtext.ui.editor.XtextEditor">
+                     </instanceof>
+                  </with>
+                  <with
+                        variable="activeEditorInput">
+                     <adapt type="org.eclipse.core.resources.IResource">
+                         <test
+                               forcePluginActivation="false"
+                               property="org.eclipse.core.resources.extension"
+                               value="toy">
+                         </test>
+                     </adapt>
+                  </with>
+               </and>
+               <iterate ifEmpty="false" operator="or">
+                  <or>
+                     <instanceof
+                         value="fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.ToyProgram">
+                     </instanceof>
+                     <adapt type="org.eclipse.core.resources.IResource">
+                         <test
+                               forcePluginActivation="false"
+                               property="org.eclipse.core.resources.extension"
+                               value="toy">
+                         </test>
+                     </adapt>
+                  </or>
+               </iterate>
+            </or>
+         </visibleWhen>
+      </command>
+   </menuContribution>
+</extension>
+
+</plugin>

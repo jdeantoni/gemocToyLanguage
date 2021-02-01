@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+  <extension point="org.eclipse.gemoc.gemoc_language_workbench.xdsml">
+    <XDSML_Definition name="fr.unice.polytech.si5.toylanguage.Toylanguage" xdsmlFilePath="/fr.unice.polytech.si5.toylanguage/Toylanguage.dsl" modelLoader_class="org.eclipse.gemoc.executionframework.extensions.sirius.modelloader.DefaultModelLoader" />
+  </extension>
+  <extension point="org.eclipse.gemoc.gemoc_language_workbench.moccml.xdsml.addition">
+    <MOCCML_XDSML_Addition name="fr.unice.polytech.si5.toylanguage.Toylanguage" referencedXDSMLName="fr.unice.polytech.si5.toylanguage.Toylanguage" codeExecutor_class="toylanguage.xdsml.api.impl.ToylanguageCodeExecutor" solver_class="org.eclipse.gemoc.execution.concurrent.ccsljavaengine.extensions.timesquare.moc.impl.CcslSolver" toCCSLQVTOFilePath="/fr.unice.polytech.si5.toylanguage.mocc/qvto-gen/modeling/toyLanguage.qvto" />
+  </extension>
+</plugin>

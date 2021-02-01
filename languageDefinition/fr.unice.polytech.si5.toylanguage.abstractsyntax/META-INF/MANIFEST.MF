@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: fr.unice.polytech.si5.toylanguage.abstractsyntax;singleton:=true
+Automatic-Module-Name: fr.unice.polytech.si5.toylanguage.abstractsyntax
+Bundle-Version: 0.1.0.qualifier
+Bundle-ClassPath: .
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage,
+ fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.impl,
+ fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.util
+Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy

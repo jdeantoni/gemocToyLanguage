@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated toyLanguage -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.presentation.ToyLanguageModelWizardID"
+            name="%_UI_ToyLanguageModelWizard_label"
+            class="fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.presentation.ToyLanguageModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/ToyLanguageModelFile.gif">
+         <description>%_UI_ToyLanguageModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated toyLanguage -->
+      <editor
+            id="fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.presentation.ToyLanguageEditorID"
+            name="%_UI_ToyLanguageEditor_label"
+            icon="icons/full/obj16/ToyLanguageModelFile.gif"
+            extensions="toylanguage"
+            class="fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.presentation.ToyLanguageEditor"
+            contributorClass="fr.unice.polytech.si5.toylanguage.abstractsyntax.toyLanguage.presentation.ToyLanguageActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>
